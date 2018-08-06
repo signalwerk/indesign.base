@@ -4,7 +4,7 @@
   "description": "Some base abstractions on top of InDesigns JavaScript API",
   "main": "index.js",
   "scripts": {
-    "start": "babel index.js --presets extendscript",
+    "babel": "extendscriptr --script src/index.js --output dist/index.js",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "repository": {
@@ -22,7 +22,7 @@
   },
   "homepage": "https://github.com/signalwerk/indesign.base#readme",
   "devDependencies": {
-    "babel-cli": "^6.26.0",
-    "babel-preset-extendscript": "^0.1.1"
+    "extendscriptr": "^1.2.1",
+    "watch": "^1.0.2"
   }
 }
