@@ -1,0 +1,28 @@
+{
+  "name": "indesign.base",
+  "version": "1.0.0",
+  "description": "Some base abstractions on top of InDesigns JavaScript API",
+  "main": "index.js",
+  "scripts": {
+    "start": "babel index.js --presets extendscript",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/signalwerk/indesign.base.git"
+  },
+  "keywords": [
+    "Adobe",
+    "InDesign"
+  ],
+  "author": "Stefan Huber",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/signalwerk/indesign.base/issues"
+  },
+  "homepage": "https://github.com/signalwerk/indesign.base#readme",
+  "devDependencies": {
+    "babel-cli": "^6.26.0",
+    "babel-preset-extendscript": "^0.1.1"
+  }
+}
