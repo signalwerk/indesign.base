@@ -1,0 +1,12 @@
+// signalwerkLib
+// @include "/Users/glender/Dropbox/CODE/Adobe/__GIT__/InDesign/signalwerkLib/main.jsx";
+
+
+
+#includepath "~/Documents/;%USERPROFILE%Documents";
+#include "basiljs/bundle/basil.js";
+
+
+https://forums.adobe.com/thread/767116?start=0&tstart=0
+
+http://stackoverflow.com/questions/10626893/extendscript-current-script-path/10627678#10627678

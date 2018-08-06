@@ -1,0 +1,20 @@
+{
+  "name": "markdowner",
+  "version": "1.0.0",
+  "description": "Markdown to ICML",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [
+    "icml",
+    "indesign",
+    "parser",
+    "markdown"
+  ],
+  "author": "Stefan Huber",
+  "license": "MIT",
+  "dependencies": {
+    "marked": "^0.3.3"
+  }
+}
