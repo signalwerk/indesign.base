@@ -19,11 +19,12 @@ let getByLabel = function(myDoc, labelStr) {
     var textFrames = _selectWhere(allTextFrames, "label", labelStr);
 
     if(textFrames.length === 0) {
-        throw "there is no textframe with the name " + labelStr;
+        throw "there is no textframe with the label " + labelStr;
     }
     if(textFrames.length > 1) {
-        throw "holy guacamole! there is more than one textframe with the name " + labelStr;
+        throw "there is more than one textframe with the name " + labelStr;
     }
+
     return new Textframe(textFrames[0]);
 
 };
