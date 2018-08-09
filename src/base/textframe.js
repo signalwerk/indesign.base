@@ -57,9 +57,9 @@ class Textframe {
     );
   }
 
-  fitHeight(orientation, _step, _threshold) {
-    let step = _step || mm2pt(10)
+  fitHeight(orientation, _threshold, _step) {
     let threshold = _threshold || mm2pt(0.1)
+    let step = _step || mm2pt(10)
             if(threshold > step) {
               return
             }
@@ -76,7 +76,7 @@ class Textframe {
             }
 
 
-    this.fitHeight(orientation, step/10, threshold)
+    this.fitHeight(orientation, threshold, step/10)
   }
 
   height(){
