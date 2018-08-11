@@ -1,51 +1,55 @@
-import console from './console.js'
-import {mm2pt} from './unit.js'
-
+import console from "./console.js";
+import { mm2pt } from "./unit.js";
+import Box from "./Box.js";
 
 let _selectWhere = function(array, key, value) {
-
-    return array.filter(item => {
-
-        if (item.hasOwnProperty(key) && item[key] === value) {
-            return true;
-        } else {
-            return false;
-        }
-    });
-}
-
-let getByLabel = function(myDoc, labelStr) {
-    var allTextFrames = myDoc.textFrames.everyItem().getElements();
-
-    var textFrames = _selectWhere(allTextFrames, "label", labelStr);
-
-    if(textFrames.length === 0) {
-        throw "there is no textframe with the label " + labelStr;
+  return array.filter(item => {
+    if (item.hasOwnProperty(key) && item[key] === value) {
+      return true;
+    } else {
+      return false;
     }
-    if(textFrames.length > 1) {
-        throw "there is more than one textframe with the name " + labelStr;
-    }
-
-    return new Textframe(textFrames[0]);
-
+  });
 };
 
+let getByLabel = function(myDoc, labelStr) {
+  var allTextFrames = myDoc.textFrames.everyItem().getElements();
+
+  var textFrames = _selectWhere(allTextFrames, "label", labelStr);
+
+  if (textFrames.length === 0) {
+    throw "there is no textframe with the label " + labelStr;
+  }
+  if (textFrames.length > 1) {
+    throw "there is more than one textframe with the name " + labelStr;
+  }
+
+  return new Textframe(textFrames[0]);
+};
 
 class Textframe {
   constructor(frame) {
     this._frame = frame;
+    this.box = {
+      top: value => new Box(this._frame).top(value),
+      left: value => new Box(this._frame).left(value),
+      bottom: value => new Box(this._frame).bottom(value),
+      right: value => new Box(this._frame).right(value),
+      x: value => new Box(this._frame).x(value),
+      y: value => new Box(this._frame).y(value)
+    };
   }
 
   placeICML(icmlFile, unlink) {
     this._frame.place(icmlFile);
 
     // optional unlink
-    if(unlink) {
+    if (unlink) {
       // dok.links.itemByName(icmlFile.name).unlink();
     }
   }
   pure() {
-    return this._frame
+    return this._frame;
   }
 
   addHeight(orientation, by) {
@@ -58,43 +62,23 @@ class Textframe {
   }
 
   fitHeight(orientation, _threshold, _step) {
-    let threshold = _threshold || mm2pt(0.1)
-    let step = _step || mm2pt(10)
-            if(threshold > step) {
-              return
-            }
-            if (this._frame.overflows) {
-              while (this._frame.overflows) {
-                   this.addHeight(orientation, step);
-              }
-            } else {
+    let threshold = _threshold || mm2pt(0.1);
+    let step = _step || mm2pt(10);
+    if (threshold > step) {
+      return;
+    }
+    if (this._frame.overflows) {
+      while (this._frame.overflows) {
+        this.addHeight(orientation, step);
+      }
+    } else {
+      while (!this._frame.overflows) {
+        this.addHeight(orientation, 0 - step);
+      }
+      this.addHeight(orientation, step);
+    }
 
-                while (!this._frame.overflows) {
-                     this.addHeight(orientation, 0 - step);
-                }
-                this.addHeight(orientation, step);
-            }
-
-
-    this.fitHeight(orientation, threshold, step/10)
-  }
-
-  height(){
-    let bbox = this.bbox();
-    return bbox[2] - bbox[0];
-  }
-
-  width(){
-    let bbox = this.bbox();
-    return  bbox[3] - bbox[1];
-  }
-
-  bbox(){
-    // upper left  Y-Coordinate
-    // upper left  X-Coordinate
-    // lower right Y-Coordinate
-    // lower right X-Coordinate
-    return this._frame.geometricBounds;
+    this.fitHeight(orientation, threshold, step / 10);
   }
 }
 
