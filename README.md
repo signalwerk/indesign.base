@@ -12,3 +12,7 @@ https://github.com/ExtendScript/extendscriptr
 
 Babel Transpiler
 https://github.com/fusepilot/babel-preset-extendscript
+
+
+api doc
+https://www.indesignjs.de/extendscriptAPI/indesign-latest/#Rectangle.html#d1e216491
