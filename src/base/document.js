@@ -22,6 +22,22 @@ class Document {
 
     return this._doc;
   }
+
+  close(saveFirst) {
+    if (saveFirst) {
+      this._doc.close(SaveOptions.YES);
+    } else {
+      this._doc.close(SaveOptions.NO);
+    }
+  }
+
+  save(savePath) {
+    if (savePath) {
+      this._doc.save(savePath);
+    } else {
+      this._doc.save();
+    }
+  }
 }
 
 export default Document;

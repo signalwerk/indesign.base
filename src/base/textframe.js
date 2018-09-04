@@ -40,12 +40,15 @@ class Textframe {
     };
   }
 
-  placeICML(icmlFile, unlink) {
+  placeICML(icmlFile, _doc, _filename) {
+
     this._frame.place(icmlFile);
 
     // optional unlink
-    if (unlink) {
-      // dok.links.itemByName(icmlFile.name).unlink();
+    if (_doc) {
+      // doc.links.itemByName(filename).unlink();
+
+      _doc.links.itemByName(_filename).unlink();
     }
   }
   pure() {
