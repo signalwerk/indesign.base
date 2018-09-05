@@ -2,13 +2,48 @@ import { getByLabel } from "./textframe.js";
 
 let _bar = 1;
 
+let _selectWhere = function(array, key, value) {
+  return array.filter(item => {
+    if (item.hasOwnProperty(key) && item[key] === value) {
+      return true;
+    } else {
+      return false;
+    }
+  });
+};
+
 class Document {
   constructor(height, width) {
     this._doc = null;
+    try{
+      this._doc = app.activeDocument; //  get the acitve document
+      }catch(e){
+        // oh oh no active doc
+        // alert("You have no document open!\n" +e);
+        return;
+      }
+
     this.textframes = {
       getByLabel: label => getByLabel(this._doc, label)
     };
   }
+
+  getByLabel(labelStr) {
+    var allPageItems = this._doc.allPageItems;
+
+    var pageItems = _selectWhere(allPageItems, "label", labelStr);
+
+    if (pageItems.length === 0) {
+      throw "there is no item with the label " + labelStr;
+    }
+    if (pageItems.length > 1) {
+      throw "there is more than one item with the name " + labelStr;
+    }
+
+    return pageItems[0];
+  };
+
+
 
   open(inFile, showWindow) {
     var finalFile = inFile;

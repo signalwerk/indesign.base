@@ -58,14 +58,14 @@ class Box {
     return this.bboxSetter(0, n);
   }
 
-  left() {
+  left(n) {
     return this.bboxSetter(1, n);
   }
 
-  bottom() {
+  bottom(n) {
     return this.bboxSetter(2, n);
   }
-  right() {
+  right(n) {
     return this.bboxSetter(3, n);
   }
   height() {

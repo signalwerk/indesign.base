@@ -4,8 +4,9 @@
   "description": "Some base abstractions on top of InDesigns JavaScript API",
   "main": "index.js",
   "scripts": {
-    "babel": "extendscriptr --script src/index.js --output dist/index.js",
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "babel": "extendscriptr --script src/index.js --output /Users/glender/Dropbox/automagnet/99_automagnet/scripts/base.jsx",
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "chokidar \"./src/**/*.js\" -c \"npm run babel\""
   },
   "repository": {
     "type": "git",
@@ -22,6 +23,7 @@
   },
   "homepage": "https://github.com/signalwerk/indesign.base#readme",
   "devDependencies": {
+    "chokidar-cli": "^1.2.1",
     "extendscriptr": "^1.2.1",
     "watch": "^1.0.2"
   }
