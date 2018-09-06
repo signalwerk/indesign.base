@@ -16,36 +16,36 @@ let doc = new Document();
 
 let open = path => doc.open(path);
 let save = path => doc.save(path);
-let importIcml = path => {
-  let textframe = doc.textframes
-    .getByLabel("importMainText")
-    .placeICML(path, doc._doc, "magnet.icml");
+// let importIcml = path => {
+//   place("importMainText", path)
+// };
+
+let placeIcml = (label, path) => {
+  let textframe = doc.textframes.getByLabel(label).placeICML(path, true);
 };
 
-let resize = path => {
-  let textframe = doc.textframes.getByLabel("importMainText");
-  //
-  let originalTop = textframe.box.top();
-  textframe.fitHeight(AnchorPoint.BOTTOM_LEFT_ANCHOR);
-  let reducedHeight = textframe.box.top() - originalTop;
-
+let resizePage = reducedHeight => {
+  // move events
+  let textframe = doc.textframes.getByLabel("events");
   textframe.box.y(textframe.box.top() - reducedHeight);
 
+  for (var i = 6; i > 0; i--) {
+    let colframe = doc.textframes.getByLabel(`col${i}`);
+    if(colframe){
+      colframe.box.y(colframe.box.top() - reducedHeight);
+    }
+  }
+
+  // resize frame box
   let frame = doc.getByLabel("formatframe");
-
   let frameBox = new Box(frame);
-
   frameBox.bottom(frameBox.bottom() - reducedHeight);
 
-  var myPage = doc._doc.pages[0];
+  // resize page
+  let myPage = doc._doc.pages[0];
+  let oldPageHeight = myPage.bounds[2] - myPage.bounds[0];
+  let oldPageWidth = myPage.bounds[3] - myPage.bounds[1];
 
-  var oldPB = myPage.bounds;
-
-  let oldPageHeight = oldPB[2] - oldPB[0];
-
-  let oldPageWidth = oldPB[3] - oldPB[1];
-
-  // alert(oldPageWidth+"x"+oldPageHeight)
   doc._doc.pages
     .everyItem()
     .resize(
@@ -55,15 +55,24 @@ let resize = path => {
       [mm2pt(oldPageWidth), mm2pt(oldPageHeight - reducedHeight)]
     );
 
-
-    // doc._doc.documentPreferences.pageWidth = 299
-    // doc._doc.documentPreferences.pageHeight = 320
-
+  // doc._doc.documentPreferences.pageWidth = 299
+  // doc._doc.documentPreferences.pageHeight = 320
 };
 
-let setInfo = info => {
-  console.log("no setInfo");
-  // let textframe = doc.textframes.getByLabel('importMainText');
+let resizeTextframe = label => {
+  let textframe = doc.textframes.getByLabel(label); // "importMainText"
+  //
+  let originalTop = textframe.box.top();
+  textframe.fitHeight(AnchorPoint.BOTTOM_LEFT_ANCHOR);
+  let reducedHeight = textframe.box.top() - originalTop;
+  return reducedHeight;
+};
+
+let setInfo = (label, info) => {
+
+  let textframe = doc.textframes.getByLabel(label);
+
+  textframe._frame.contents = info;
 };
 
 let pdf = path => {
@@ -82,24 +91,29 @@ let msg = msg => {
 //   "/Users/glender/Dropbox/automagnet/4_Druckunterlagen/KW37/1_KulturMagnet_NZZ_KW37_2018_Mo__TEST-2.indd"
 // );
 
+// placeIcml(
+//   "importMainText",
+//   "/Users/glender/Dropbox/automagnet/4_Druckunterlagen/KW37/_temp/cjlodep7o02il0879agqoypiv/magnet.icml"
+// );
+//
 
+// setInfo('info', "Infozeile")
 
-
-alert("done");
+// alert("done");
 
 // msg("final");
 // resize();
 
-
 let signalwerk_id = {
   open,
   save,
-  importIcml,
-  resize,
+  placeIcml,
+  resizeTextframe,
+  resizePage,
   setInfo,
   pdf,
   close,
-  msg,
+  msg
 };
 
 global.signalwerk_id = signalwerk_id;

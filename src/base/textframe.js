@@ -18,10 +18,12 @@ let getByLabel = function(myDoc, labelStr) {
   var textFrames = _selectWhere(allTextFrames, "label", labelStr);
 
   if (textFrames.length === 0) {
-    throw "there is no textframe with the label " + labelStr;
+    return null;
+    // throw "there is no textframe with the label " + labelStr;
   }
   if (textFrames.length > 1) {
-    throw "there is more than one textframe with the name " + labelStr;
+    return null;
+    // throw "there is more than one textframe with the name " + labelStr;
   }
 
   return new Textframe(textFrames[0]);
@@ -40,15 +42,22 @@ class Textframe {
     };
   }
 
-  placeICML(icmlFile, _doc, _filename) {
+  placeICML(path, unlink) {
+    let icmlFile = File(path);
 
     this._frame.place(icmlFile);
 
     // optional unlink
-    if (_doc) {
-      // doc.links.itemByName(filename).unlink();
+    if (unlink) {
+      let doc = this._frame.parentPage.parent.parent; // page // spread // doc
 
-      _doc.links.itemByName(_filename).unlink();
+      for (var i = doc.links.length - 1; i >= 0; i--) {
+        var currentFile = File(doc.links[i].filePath);
+
+        if (currentFile.fsName === icmlFile.fsName) {
+          doc.links[i].unlink();
+        }
+      }
     }
   }
   pure() {

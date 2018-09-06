@@ -15,13 +15,13 @@ let _selectWhere = function(array, key, value) {
 class Document {
   constructor(height, width) {
     this._doc = null;
-    try{
-      this._doc = app.activeDocument; //  get the acitve document
-      }catch(e){
-        // oh oh no active doc
-        // alert("You have no document open!\n" +e);
-        return;
-      }
+    // try{
+    //   this._doc = app.activeDocument; //  get the acitve document
+    //   }catch(e){
+    //     // oh oh no active doc
+    //     // alert("You have no document open!\n" +e);
+    //     return;
+    //   }
 
     this.textframes = {
       getByLabel: label => getByLabel(this._doc, label)
