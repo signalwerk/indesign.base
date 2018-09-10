@@ -27,20 +27,26 @@ let placeIcml = (label, path) => {
 let resizePage = reducedHeight => {
   // move events
   let textframe = doc.textframes.getByLabel("events");
+
+  if (reducedHeight === 0 || !textframe) {
+    return;
+  }
+
   textframe.box.y(textframe.box.top() - reducedHeight);
 
   for (var i = 6; i > 0; i--) {
     let colframe = doc.textframes.getByLabel(`col${i}`);
-    if(colframe){
+    if (colframe) {
       colframe.box.y(colframe.box.top() - reducedHeight);
     }
   }
 
   // resize frame box
   let frame = doc.getByLabel("formatframe");
-  let frameBox = new Box(frame);
-  frameBox.bottom(frameBox.bottom() - reducedHeight);
-
+  if (frame) {
+    let frameBox = new Box(frame);
+    frameBox.bottom(frameBox.bottom() - reducedHeight);
+  }
   // resize page
   let myPage = doc._doc.pages[0];
   let oldPageHeight = myPage.bounds[2] - myPage.bounds[0];
@@ -69,15 +75,23 @@ let resizeTextframe = label => {
 };
 
 let setInfo = (label, info) => {
-
   let textframe = doc.textframes.getByLabel(label);
 
-  textframe._frame.contents = info;
+  if (textframe) {
+    textframe._frame.contents = info;
+  }
 };
 
 let pdf = path => {
   console.log("no pdf");
   // let textframe = doc.textframes.getByLabel('importMainText');
+};
+
+let remove = label => {
+  let textframe = doc.textframes.getByLabel(label);
+  if (textframe) {
+    textframe._frame.remove();
+  }
 };
 
 let close = path => doc.close();
@@ -113,6 +127,7 @@ let signalwerk_id = {
   setInfo,
   pdf,
   close,
+  remove,
   msg
 };
 

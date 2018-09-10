@@ -15,17 +15,19 @@ let _selectWhere = function(array, key, value) {
 class Document {
   constructor(height, width) {
     this._doc = null;
-    // try{
-    //   this._doc = app.activeDocument; //  get the acitve document
-    //   }catch(e){
-    //     // oh oh no active doc
-    //     // alert("You have no document open!\n" +e);
-    //     return;
-    //   }
+
 
     this.textframes = {
       getByLabel: label => getByLabel(this._doc, label)
     };
+
+    try{
+      this._doc = app.activeDocument; //  get the acitve document
+      }catch(e){
+        // oh oh no active doc
+        // alert("You have no document open!\n" +e);
+        return;
+      }
   }
 
   getByLabel(labelStr) {
@@ -34,10 +36,12 @@ class Document {
     var pageItems = _selectWhere(allPageItems, "label", labelStr);
 
     if (pageItems.length === 0) {
-      throw "there is no item with the label " + labelStr;
+      return null;
+      // throw "there is no item with the label " + labelStr;
     }
     if (pageItems.length > 1) {
-      throw "there is more than one item with the name " + labelStr;
+      return null;
+      // throw "there is more than one item with the name " + labelStr;
     }
 
     return pageItems[0];

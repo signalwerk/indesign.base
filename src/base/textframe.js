@@ -38,7 +38,8 @@ class Textframe {
       bottom: value => new Box(this._frame).bottom(value),
       right: value => new Box(this._frame).right(value),
       x: value => new Box(this._frame).x(value),
-      y: value => new Box(this._frame).y(value)
+      y: value => new Box(this._frame).y(value),
+      height: value => new Box(this._frame).height(value),
     };
   }
 
@@ -79,6 +80,10 @@ class Textframe {
     if (threshold > step) {
       return;
     }
+    if (this.box.height() <= threshold) {
+      return;
+    }
+
     if (this._frame.overflows) {
       while (this._frame.overflows) {
         this.addHeight(orientation, step);
