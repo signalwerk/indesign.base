@@ -75,7 +75,7 @@ class Textframe {
   }
 
   fitHeight(orientation, _threshold, _step) {
-    let threshold = _threshold || mm2pt(0.1);
+    let threshold = _threshold || mm2pt(1);
     let step = _step || mm2pt(10);
     if (threshold > step) {
       return;
